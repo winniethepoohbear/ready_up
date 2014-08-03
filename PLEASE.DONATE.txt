@@ -1,4 +1,4 @@
-Please consider donating; PayPal to: michaeltoth.85@gmail.com
+Please consider donating; You can click the link at the top of the repository or use this link: http://goo.gl/AWRf1r
 
 A lot of time went into developing the ready up core, as well as the numerous modules that accompany it.
 I will do my best to provide support for the current modules and the ready up core.
