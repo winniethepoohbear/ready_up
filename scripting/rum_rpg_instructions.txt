@@ -1,0 +1,255 @@
+ ___________________
+/                   \
+|   Installation    |
+\___________________/
+
+1.. Place rum_rpg.smx in your ../plugins/ folder.
+2.. Place rum_rpg.txt in your ../gamedata/ folder.
+3.. Place the contents of ../configs/readyup/rpg/ in your ../configs/readyup/rpg/ folder.
+4.. Place rum_rpg.phrases.txt in your ../translations/ folder.
+5.. Open the ../configs/readyup/rpg/config.cfg and Find "database prefix?"
+6.. Open the ../configs/databases.cfg and add an entry for the value of "database prefix?"
+	Ex:
+		"rum_rpg"
+       		{
+                	"driver"                        "default"
+                	"host"                          "hostname.com"
+                	"database"                      "database_name"
+                	"user"                          "database_loginname"
+                	"pass"                          "database_loginpassword"
+                	"port"                          "3306"
+        	}
+
+
+ ___________________
+/                   \
+|   Configuration   |
+\___________________/
+
+The Ready Up! RPG module is extremely flexible, allowing for an astounding array of talents through ability
+combinations. With this flexibility comes the freedom to structure each menu in your own, unique way.
+From the order of talents, the name of the talents, the abilities of each talent, and more!
+
+This also means that the configuration required for this module is much more demanding. As opposed to mods that
+are hard-coded, RPG reads the data inserted into files. It'll take longer to set up, but it'll also be easier to
+edit and make changes and/or additions on the fly.
+
+Don't worry about the effects of removing or adding options. New database entries are automatically created at
+this time; However, if the column already exists, it will log the error, but don't worry about that right now.
+At some point, when other features have been implemented, I'll take the time to re-work this method.
+
+
+The samples below show how to properly configure each file.
+THE ACCEPTABLE KEYS MAY CHANGE BETWEEN NOW AND THE FINAL WORKING VERSION OF THE MODULE.
+
+
+../CONFIGS/READYUP/RPG/CONFIG.CFG
+
+This is the main config file. Edit these appropriately, because some of these values you probably don't want to
+change without doing a hard reset (such as "experience start?" and "requirement multiplier?"
+However, some you can change freely without causing an imbalance.
+
+
+
+
+"config"
+{
+	"max level?"				"50"		// The max player level.
+	"experience start?"			"10000"		// Experience Lv.1 players must achieve for Lv.2.
+	"talent points per level?"		"3"		// How many talent points does a player earn for leveling up?
+	"requirement multiplier?"		"1.1"		// Multiplied against experience requirement to determine next experience requirement.
+	"experience multiplier survivor?"	"0.17"		// How much experience survivors earn per point of damage dealt.
+	"experience multiplier survivor boss?"	"0.03"		// How much experience survivors earn per point of damage dealt against tanks.
+	"experience multiplier infected?"	"0.57"		// How much experience infected earn per point of damage dealt.
+	"experience perpetrator level?"		"3"		// Bonus experience earned for each level a player has achieved when they kill another player.
+	"experience handicap bonus?"		"1"		// Bonus experience added to the bonus experience earned above, for each level below the victim the perpetrator is.
+	"experience handicap penalty?"		"2"		// Bonus experience removed from the bonus experience earned above, for each level above the victim the perpetrator is.
+	"points multiplier survivor?"		"0.01"		// The points earned per damage dealt by survivors to infected.
+	"points multiplier survivor boss?"	"0.005"		// The points earned per damage dealt by survivors against tanks.
+	"points multiplier infected?"		"0.18"		// The points earned per damage dealt by infected to survivors.
+	"rpg mode?"				"2"		// If 0, the plugin will run in buy plugin mode only. if 1, in rpg mode only. in 2, both modes are enabled.
+	"rpg type?"				"1"		// If 0, players earn talent points for reaching experience cap, leveling. If 1, players spend exp to both level up and purchase ability upgrades.
+	"upgrade experience cost?"		"2000"		// If rpg type 1, the starting experience cost to upgrade abilities.
+	"upgrade experience multiplier?"	"1.1"		// Multiplied against upgrade experience cost each time an upgrade is purchased to determine the next cost.
+	"upgrade experience cost reset?"	"1"		// Do we reset the experience upgrade cost to the base cost on level up?
+	"upgrade experience cost increase?"	"1000"		// If experience upgrade cost is reset on level up, the value to add to the base cost for each player level.
+	"award broadcast?"			"2"		// 0 - No Broadcast. 1 - Broadcast to self. 2 - Broadcast Total to self. 3 - Broadcast Total to team.
+	"buy rpg mode?"				"0"		// 0 - Classic SkyRPG Mode. 1 - XP determines which abilities players can buy, Points purchase / upgrade them, reset on round end.
+	"new player slate points?"		"5"		// How many SLATE points new players are given.
+	"slate category maximum?"		"20"		// The maximum points a player can place into any given slate category.
+	"strength?"				"3"		// The starting value of this slate category for a new player.
+	"luck?"					"3"
+	"ability?"				"3"
+	"technique?"				"3"
+	"endurance?"				"3"
+	"slate chance range?"			""		// How far away a player can be from the common, special, or boss, to be eligible to earn SLATE points.
+	"slate chance commons?"			"0.0001"	// Set to an extremely low value because the chance rolls EVERY SINGLE TIME a common infected is killed.
+	"slate chance specials?"		"0.001"
+	"slate chance bosses?"			"0.01"		// 0.01 = 1%, 0.001 = 0.1%, etc.
+	"sky points menu name?"			"Sky Points"	// Translation file name.
+	"sky points award time?"		"60"		// Number of minutes between sky point awards.
+	"sky points award value?"		"1"		// Sky point amount awarded.
+	"sky points spectators?"		"0"		// Can spectators earn?
+	"sky points chance commons?"		"0.0001"
+	"sky points chance specials?"		"0.001"
+	"sky points chance bosses?"		"0.01"
+	"infected bot handicap?"		"10"		// (-1) Avg of human survivor levels. (0) Level of highest human survivor. (n) bot level is this many levels above individual players.
+	"automated spawner?"			"30"		// How often infected bots are spawned. (0) Disabled. (num) seconds delay between auto spawns.
+	"autospawn drop chance?"		"0.3"		// Chance that the automated spawned will drop the infected bot directly on a survivor.
+	"drop count?"				"0"		// How many spawn; drop chance rolls individually for each spawned. (0) 1 - human survivor count, randomly. (-1) Disables. (num) specific amount.
+	"database prefix?"			"rum_rpg"	// Database entry of this value should be in configs/databases.cfg. This is here for... I don't know why. Someone will find a reason.
+}
+
+
+
+
+../CONFIGS/READYUP/RPG/MAINMENU.CFG
+
+This is the main menu that appears to players when they type the !rpg (not yet configurable, re: future update)
+Realize that the phrases on the left must be added to your ../TRANSLATIONS/RUM_RPG.PHRASES.txt
+
+
+
+
+"Main Menu"
+{	// Translation Name	// Menu / Action Target
+	"Survivor Talents"	"rpg/survivormenu.cfg"
+	"Infected Talents"	"rpg/infectedmenu.cfg"
+	"Passive Abilities"	"rpg/passivesmenu.cfg"	// I actually think this menu is deprecated (in the base version, at least)
+	"level up"		"level up"		// This command targets the level up option.
+	"Sky Store"		"rpg/skystore.cfg"
+	"EOM"			"EOM"			// This line must exist at the end of your menu.
+}
+
+
+
+
+../CONFIGS/READYUP/RPG/EVENTS.CFG
+
+For a full list of events, check http://wiki.alliedmods.net/Left_4_Dead_2_Events
+Every key (left) and value (right) isn't required. It's up to you to check the above link to determine what is and
+what is not necessary. Explaining these aren't necessary as they're explained on the wiki.
+Again, the EOM line is REQUIRED.
+
+
+
+
+"player_hurt"
+{
+	"event name?"		"player_hurt"
+	"perpetrator?"		"attacker"
+	"victim?"		"userid"
+	"damage type?"		"type"
+	"health?"		"dmg_health"				// The amount of health the victim lost.
+	"damage award?"		"1"
+	"EOM"			"EOM"
+}
+
+
+
+
+../CONFIGS/READYUP/RPG/SURVIVORMENU.CFG
+or
+../CONFIGS/READYUP/RPG/INFECTEDMENU.CFG
+
+
+
+
+Legend: (CHARACTERS ARE CASE-SENSITIVE)
+
+"ability trigger?" values:
+"A"	-	Infected Abilities, such as hunter pounce or a spitter spitting
+"a"	-	Triggers when the player spawns
+"c"	-	Depends on the chance roll ability (Excluding this char from "ability trigger?" means a die won't roll to determine if it fires)
+"D"	-	Damaging a player on the opposite team
+"d"	-	Damaging a player on the same team. (Abilities like healing bullets)
+"E"	-	Triggers when the player dies
+"i"	-	Triggered when a player is biled on
+"j"	-	Triggered when a player jumps
+"p"	-	Periodic (Timer)
+"T"	-	Triggers when spit deals damage
+"v"	-	Requires active victim
+
+
+"survivor ability effects?" and "infected ability effects?" values:
+"a"	-	Adrenaline
+"b"	-	Bean bag effect
+"B"	-	Blind effect
+"C"	-	Chance roll ability (So it's only used to determine a players roll chance on abilities triggering)
+"d"	-	Damage is increased (by ability strength) TEMPORARILY (based on ability time)
+"f"	-	Creates fire on the origin of the player
+"g"	-	Modifies the player gravity temporarily
+"h"	-	Heals the player
+"H"	-	Health modifier
+"i"	-	Bile (the player is covered in bile as if a boomer biled or exploded on them)
+"j"	-	Forces the player to jump.
+"k"	-	Instantly kills the target
+"l"	-	Makes the player transparent; such as a cloaking device. (The higher the value the more cloaked a player is)
+"m"	-	Player takes damage based on the value
+"o"	-	Absorbs damage instead of receiving it (essentially, a shield.)
+"p"	-	Modifies movement speed
+"R"	-	Reflects damage
+"s"	-	Slowing effect
+"S"	-	Stagger effect
+"t"	-	Spit is dropped on the target
+"T"	-	Heals the target
+"z"	-	Zero gravity effect
+
+
+"passive effects?" values:
+"d"	-	Damage is increased (by ability strength)
+"e"	-	Modifies player health pool
+"E"	-	Health Regeneration
+"l"	-	Affects the player only when they are covered in boomer bile
+"m"	-	Makes the player immune to all ability effects (for a period of time based on value)
+"P"	-	Removes spawn restrictions (i.e. allows the infected player to spawn, even if survivors can see them)
+"r"	-	Radar (Survivor ability, "beacons" the location of infected players within range)
+
+
+Talent Example:
+
+
+
+
+"Survivor Health"						// The TALENT name (as it appears in the database and the translation name for ../TRANSLATIONS/RUM_RPG.phrases.txt)
+{
+	"increase per point?"			"0.03"		// The amount of health increase (percentage) a player has per point in this talent.
+	"maximum talent points allowed?"	"50"		// The amount of talent points that can be placed in this category.
+	"first point value?"			"0.03"		// The value that the first point of a talent is worth.
+	"accompanied by?"			"none"		// Not currently used.
+	"cooldown per point?"			"0.0"		// The amount of time (in seconds) that must pass between activations of this ability; rises with each point in the ability. 0.0 Disables.
+	"cooldown start?"			"-1.0"		// If -1.0, cooldown per point increases cooldown, otherwise cooldown per point subtracts from this value. If total cooldown is < 0.1, plugin will failstate and stop.
+	"class required?"			"0"		// 0 - survivor, 1 - smoker, 2 - boomer, 3 - hunter, 4 - spitter, 5 - jockey, 6 - charger, 8 - tank (Ex: 12 = smoker, boomer)
+	"ability active time?"			"0.0"		// How long the ability is active (in seconds), if it's an over-time ability.
+	"ability active range?"			"0.0"		// The range (in game units) the abilities effects reach for affected players during its active time.
+	"restricted by level?"			"1"		// Is there a restriction to how many talent points can be spent based on the players level?
+	"talent points per level?"		"2"		// How many talent points can be spent based on player level? Ex. if 2, and Lv. 4, a player can spend 8 points in the category.
+	"minimum level required?"		"0"		// If a minimum required level is set, the value is subtracted from the players level to calculate talent points per level (if enabled).
+	"survivor ability effects?"		"e"		// The effects that affect survivor players targeted by this ability. 0 ignores.
+	"infected ability effects?"		"0"		// The effects that affect infected players targeted by this ability. 0 ignores.
+	"weapons permitted?"			"ignore"	// Ignore - Ignores field. All - All weapons. Otherwise, separate allowed weapons with commas.
+	"passive or aggressive?"		"passive"	// Passive (affects the perpetrator) or Aggressive (affects the perpetrator's target)
+	"ability trigger?"			"0"		// What type of trigger is required to activate this ability? 0 means it is ALWAYS active.
+	"victim lower level penalty?"		"0.0"		// The penalty instated against the aggressor if the player is a lower level (this also applies to same-team abilities for balance.)
+	"victim lower level ignored?"		"0"		// How many levels below the aggressor must a target be for this ability to do nothing to them (this also applies to same-team abilities for balance.)
+	"victim higher level award?"		"0.0"		// The bonus per level above the aggressor of the victim to increase its effectiveness (this does not apply to same-team abilities for balance.)
+	"ability type?"				"0"		// Not currently used.
+	"passive effects?"			"e"		// The passive effects that this ability grants WHEN active.
+	"ability inherited?"			"1"		// If 0, the ability must be unlocked, either through sky points or loot drops.
+	"store purchase cost?"			"0"		// If inherited is 0, the cost to buy from the sky store.
+	"origin based?"				"0"		// If it's area effect or range-based, if it starts at the client, target, or is ignored (0) ?
+	"team affected?"			"victim"			// client (aggregator) victim (target) both (both players)
+}
+
+
+
+
+
+You must provide an "ability trigger?" for survivor / infected ability effects to fire.
+"passive effects?" are always active (based on their criterion of course.)
+However, survivor / infected ability effects can have more than one effect, but MUST have at least one.
+
+Example:
+
+"survivor ability effects?"	"st"	// The target (if survivor, or the player who used it if survivor and "team affected?" is "both") of the ability will be both slowed and have spit dropped on them. Geeze.
+"infected ability effects?"	"bB"	// The target (if infected, or the player who used it if infected and "team affected?" is "both") of the ability will both be bean bagged and blinded. Ouch.
