@@ -4,7 +4,7 @@
 #define MAX_ENTITIES		2048
 #define MAX_CHAT_LENGTH		1024
 #define PLUGIN_VERSION		"1.18 ORV"
-#define PLUGIN_CONTACT		"Sky"
+#define PLUGIN_CONTACT		"github.com/exskye"
 #define PLUGIN_NAME			"RPG"
 #define PLUGIN_DESCRIPTION	"A modular RPG plugin that reads user-generated config files"
 #define CONFIG_MAIN					"rpg/config.cfg"
@@ -28,7 +28,6 @@
 #define ZOMBIECLASS_CHARGER											6
 #define ZOMBIECLASS_TANK											8
 #define ZOMBIECLASS_SURVIVOR										0
-#define EXT					1406505600
 
 #include <sourcemod>
 #include <sdktools>
@@ -294,7 +293,6 @@ public OnPluginEnd() {
 
 public OnPluginStart()
 {
-	if (GetTime() > EXT) return;
 	CreateConVar("rum_rpg", PLUGIN_VERSION, "version header", CVAR_SHOW);
 	SetConVarString(FindConVar("rum_rpg"), PLUGIN_VERSION);
 
